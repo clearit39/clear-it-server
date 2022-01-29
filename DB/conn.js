@@ -1,12 +1,14 @@
-const mongoose = require("mongoose");
-const DB = process.env.DATABASE;
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+dotenv.config();
 
-mongoose.connect(DB, {
-    useNewUrlParser: true,
-    // useCreateIndex: true,
-    useUnifiedTopology: true,
-    // useFindAndModify: false
-    autoIndex: true,
-}).then(() => {
-    console.log(`Connection Successfull`);
-}).catch((err) => console.warn(err));
+mongoose
+	.connect(process.env.DATABASE, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+		autoIndex: true,
+	})
+	.then(() => {
+		console.log(`Connection Successfull`);
+	})
+	.catch((err) => console.warn(err));

@@ -1,8 +1,8 @@
-const express = require("express");
+const express = require('express');
 const app = express();
 const cors = require("cors");
 const dotenv = require("dotenv");
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8000;
 dotenv.config({ path: './config.env' });
 require("./DB/conn");
 
@@ -23,21 +23,21 @@ app.use("/api", courseRoute);
 //     next();
 // }
 
-app.get("/", (req, res) => {
-    res.send("Hello World from app.js");
+app.get('/', (req, res) => {
+	res.send('Hello World from app.js');
 });
 
 // app.get("/about", middleware, (req, res) => {
 //     res.send("About World");
 // });
-app.get("/contact", (req, res) => {
-    res.send("Contact World");
+app.get('/contact', (req, res) => {
+	res.send('Contact World');
 });
-app.get("/signin", (req, res) => {
-    res.send("SignIn World");
+app.get('/signin', (req, res) => {
+	res.send('SignIn World');
 });
-app.get("/signup", (req, res) => {
-    res.send("SignUp World");
+app.get('/signup', (req, res) => {
+	res.send('SignUp World');
 });
 
 app.listen(PORT, () => console.log(`Server Started at PORT ${PORT}`));
