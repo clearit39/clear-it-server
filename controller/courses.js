@@ -1,4 +1,4 @@
-const Course = require("../models/Courses");
+const Course = require("../model/coursesSchema");
 
 exports.createCourse = (req, res) => {
   const course = new Course(req.body);

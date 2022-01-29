@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const { isSignedIn, isAuthenticated, isAdmin } = require("../controllers/auth");
+const { isSignedIn, isAuthenticated, isAdmin } = require("../controller/auth");
 
 const {
   createCourse,
@@ -10,8 +10,8 @@ const {
   updateCourseParticipants,
   updateCourse,
   deleteCourse,
-} = require("../controllers/courses");
-const { getUserById } = require("../controllers/user");
+} = require("../controller/courses");
+const { getUserById } = require("../controller/users");
 
 router.param("userId", getUserById);
 router.param("courseId", getCourseById);

@@ -7,7 +7,7 @@ dotenv.config({ path: './config.env' });
 require("./DB/conn");
 
 
-const courseRoute = require("./routes/courses");
+const courseRoute = require("./router/courses");
 
 // const Users = require('./model/userSchema');
 
