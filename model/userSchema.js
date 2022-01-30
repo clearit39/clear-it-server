@@ -23,7 +23,10 @@ const userSchema = new mongoose.Schema(
     courses: [
       {
         type: ObjectId,
-        ref: "CoursesSchema",
+        progress: {
+          type: Number,
+          default: 0,
+        },
       },
     ],
     phone: {

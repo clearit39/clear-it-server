@@ -1,6 +1,7 @@
 const Course = require("../model/coursesSchema");
 
 exports.createCourse = (req, res) => {
+  console.log("req.body:", req.body);
   const course = new Course(req.body);
   course.save((err, course) => {
     if (err) {

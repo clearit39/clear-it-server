@@ -17,12 +17,58 @@ const CoursesSchema = new mongoose.Schema({
     type: String,
     // required: true,
   },
+  courseOrganizerId: {
+    type: ObjectId,
+    required: true,
+  },
+  courseSection: [
+    {
+      sectionName: {
+        type: String,
+      },
+      sectionDescription: {
+        type: String,
+      },
+      sectionImage: {
+        type: String,
+      },
+      sectionVideos: [
+        {
+          videoName: {
+            type: String,
+          },
+          videoDescription: {
+            type: String,
+          },
+          videoLink: {
+            type: String,
+          },
+          videoThumbnail: {
+            type: String,
+          },
+        },
+      ],
+    },
+  ],
   courseParticipants: [
     {
       type: String,
       ref: "User",
     },
   ],
+	avgRating: {
+		type: Number,
+		min: 0,
+		max: 5,
+		default: 0,
+	},
+	numOfRatings: {
+		type: Number,
+		default: 0,
+	},
+  courseType: {
+    type: String,
+  },
   courseStatus: {
     type: String,
     // required: true,
@@ -31,12 +77,15 @@ const CoursesSchema = new mongoose.Schema({
     type: Array,
     // required: true,
   },
-  courseVideoLink: {
+  courseDemoVideoLink: {
     type: String,
     // required: true,
   },
 
 });
+
+
+
 
 
 module.exports = mongoose.model("Courses", CoursesSchema);
