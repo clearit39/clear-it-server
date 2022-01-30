@@ -1,26 +1,6 @@
 const User = require("../model/userSchema")
 const jwt = require("jsonwebtoken");
 
-
-exports.register = async(req, res) => {
-    const user = new User(req.body);
-    await user.save(async(error, user) => {
-        console.log(error);
-        console.log(user)
-        if (error) {
-            console.log(error);
-            return await res.status(400).json({
-                error: error,
-            });
-        } else {
-            var token = jwt.sign({ _id: user._id }, "mukul");
-            await res.cookie("token", token, { expire: new Date() + 9999 });
-            // const token = "ubdrf7634y0t83547ytw9845yt";
-            await res.json({ user, token });
-        }
-    })
-}
-
 exports.getUserById = (req, res, next, id) => {
     User.findById(id).exec((err, user) => {
         if (err || !user) {

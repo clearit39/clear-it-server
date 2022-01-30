@@ -8,7 +8,7 @@ mongoose
 		useUnifiedTopology: true,
 		autoIndex: true,
 	})
-	.then(() => {
-		console.log(`Connection Successfull`);
-	})
+	.then((e) => {
+    console.log(`Connected to ${e.connections[0].name} DB`);
+  })
 	.catch((err) => console.warn(err));

@@ -1,72 +1,97 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const userSchema = new mongoose.Schema({
+const crypto = require("crypto");
+const uuidv1 = require("uuid/v1");
+const { ObjectId } = mongoose.Schema;
+
+const userSchema = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     username: {
-        type: String,
-        required: true,
-        unique: true
+      type: String,
+      required: true,
+      unique: true,
     },
     email: {
-        type: String,
-        required: true,
-        unique: true
+      type: String,
+      required: true,
+      unique: true,
     },
+    courses: [
+      {
+        type: ObjectId,
+        ref: "CoursesSchema",
+      },
+    ],
     phone: {
-        type: Number,
-        required: true,
-        unique: true
+      type: Number,
+      required: true,
+      unique: true,
     },
-    password: {
-        type: String,
-        required: true
+    encry_password: {
+      type: String,
+      required: true,
     },
-    cpassword: {
-        type: String,
-        required: true
-    },
+    salt: String,
     preparingFor: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     currentClass: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
+    },
+    role: {
+        type: Number,
+        default: 0
     },
     occupation: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
-    tokens: [{
-        token: {
-            type: String,
-            required: true
-        }
-    }]
-});
+    resetToken: String,
+    expireToken: Date,
+  },
+  {
+    timestamps: true,
+  }
+);
 
-userSchema.pre('save', async function(next) {
-    if (this.isModified('password')) {
-        this.password = await bcrypt.hash(this.password, 12);
-        this.cpassword = await bcrypt.hash(this.cpassword, 12);
-    }
-    next();
-});
+var commonsalt = uuidv1();
+userSchema
+  .virtual("password")
+  .set(function (password) {
+    this._password = password;
+    this.salt = commonsalt;
+    this.encry_password = this.securePassword(password);
+  })
+  .get(function () {
+    return this._password;
+  });
 
-userSchema.methods.generateAuthToken = async function() {
+userSchema.methods = {
+  autheticate: function (plainpassword) {
+    return this.securePassword(plainpassword) === this.encry_password;
+  },
+  googleautheticate: function (plainpassword) {
+    return this.securePassword(plainpassword) === this.encry_googletoken;
+  },
+
+  securePassword: function (plainpassword) {
+    if (!plainpassword) return "";
     try {
-        let token = jwt.sign({ _id: this._id }, process.env.SECRET_KEY);
-        this.tokens = this.tokens.concat({ token: token });
-        await this.save();
-        return token;
+      return crypto
+        .createHmac("sha256", this.salt)
+        .update(plainpassword)
+        .digest("hex");
     } catch (err) {
-        console.log(err);
+      return "";
     }
-}
+  },
+};
 
 const Users = mongoose.model('USER', userSchema);
 module.exports = Users;

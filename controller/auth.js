@@ -40,7 +40,7 @@ exports.signin = (req, res) => {
     //if all things are Ok now we have to make a token and put it into the cookie
     var token = jwt.sign({ _id: user._id }, process.env.SECRET);
 
-    res.cookie("token", token, { expire: new Date() + 1 });
+    res.cookie("token", token, { expire: new Date() + 999 });
     return res.json({token,user});
   });
 };
