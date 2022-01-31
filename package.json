@@ -1,7 +1,7 @@
 {
-  "name": "first-mern-app",
-  "version": "1.0.0",
-  "description": "First MERN App",
+  "name": "ClearIt",
+  "version": "2.0.0",
+  "description": "ClearIt Backend",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -25,5 +25,6 @@
     "mongoose": "^6.0.12",
     "nodemon": "^2.0.15",
     "uuid": "^3.3.3"
-  }
+  },
+  "repository": "https://github.com/clearit39/clear-it-server.git"
 }
