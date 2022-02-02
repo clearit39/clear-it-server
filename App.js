@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 8000;
 dotenv.config({ path: './config.env' });
 require('./DB/conn');
 
+const authRoute = require('./router/auth');
 const courseRoute = require('./router/courses');
 const questionRoute = require('./router/question');
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(require('./router/auth'));
 app.use('/api', courseRoute);
 app.use('/api', questionRoute);
+app.use('/api', authRoute);
 
 // const middleware = (req, res, next) => {
 //     console.log("Hello my middleware");
